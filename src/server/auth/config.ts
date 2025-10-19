@@ -1,3 +1,4 @@
+// src/server/auth/config.ts
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
@@ -31,19 +32,16 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
-  providers: [
-    DiscordProvider,
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
-  ],
   adapter: PrismaAdapter(db),
+
+  providers: [
+    DiscordProvider({
+      clientId: process.env.AUTH_DISCORD_ID!,
+      clientSecret: process.env.AUTH_DISCORD_SECRET!,
+    }),
+    // Add more providers here as needed
+  ],
+
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -53,4 +51,13 @@ export const authConfig = {
       },
     }),
   },
+
+  /**
+   * Trusted host configuration
+   * - NEXTAUTH_URL should be set in .env.local or .env
+   * - trustHost: true allows NextAuth to accept the configured host
+   */
+  trustHost: true,
+  basePath: "/api/auth",
 } satisfies NextAuthConfig;
+
