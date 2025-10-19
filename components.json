@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "name": "t3-test",
+  "rsc": true,
+  "typescript": true,
+  "style": "default",
+  "tailwind": {
+    "css": "src/styles/globals.css"
+  },
+  "tsconfigPath": "tsconfig.json",
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  }
+}

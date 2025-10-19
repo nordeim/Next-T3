@@ -1,0 +1,9 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "name": "t3-test",
+  "rsc": true,
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  }
+}
